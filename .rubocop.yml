@@ -1,0 +1,22 @@
+AllCops:
+  Include:
+    - Gemfile
+    - Rakefile
+
+ClassLength:
+  Max: 100
+
+GuardClause:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+TrailingComma:
+  Enabled: false
+
+LineLength:
+  Max: 119

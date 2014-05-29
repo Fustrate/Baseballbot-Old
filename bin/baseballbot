@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+if RUBY_VERSION >= '2.1'
+  $LOAD_PATH.unshift(File.dirname(File.realpath(__FILE__)) + '/../lib')
+else
+  puts 'Baseballbot requires Ruby >= 2.1'
+  exit(-1)
+end
