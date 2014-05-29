@@ -13,6 +13,7 @@ module Baseballbot
     end
 
     def update_sidebars!
+      subreddits.each(&:update_sidebar!)
     end
 
     protected
@@ -42,6 +43,10 @@ module Baseballbot
       @config ||= begin
         File.read '.baseballbot.yml'
       end
+    end
+
+    def subreddits
+      db
     end
 
     def current_gamechats
