@@ -40,9 +40,7 @@ module Baseballbot
     end
 
     def config
-      @config ||= begin
-        File.read '.baseballbot.yml'
-      end
+      @config ||= YAML.load File.read '.baseballbot.yml'
     end
 
     def subreddits
