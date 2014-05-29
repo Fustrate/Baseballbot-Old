@@ -3,6 +3,10 @@
 
 if RUBY_VERSION >= '2.1'
   $LOAD_PATH.unshift(File.dirname(File.realpath(__FILE__)) + '/../lib')
+
+  require 'baseballbot/cli'
+
+  Baseballbot::CLI.start
 else
   puts 'Baseballbot requires Ruby >= 2.1'
   exit(-1)
