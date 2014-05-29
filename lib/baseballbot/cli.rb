@@ -8,8 +8,10 @@ module Baseballbot
       case options[:db]
       when 'mysql'
         puts 'Initializing with mysql'
+        FileUtils.cp(File.expand_path('../examples/mysql.yml', __FILE__), '.baseballbot.yml')
       when 'pg', 'postgresql'
         puts 'Initializing with postgresql'
+        FileUtils.cp(File.expand_path('../examples/postgresql.yml', __FILE__), '.baseballbot.yml')
       else
         puts 'Invalid database type'
       end
