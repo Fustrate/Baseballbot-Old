@@ -3,6 +3,8 @@ require 'baseballbot/template'
 require 'baseballbot/template/base'
 require 'baseballbot/template/gamechat'
 
+require 'yaml'
+
 module Baseballbot
   class << self
     def update_gamechats!
@@ -40,7 +42,11 @@ module Baseballbot
     end
 
     def config
-      @config ||= YAML.load File.read '.baseballbot.yml'
+      @config ||= begin
+                    YAML.load File.read '.baseballbot.yml'
+                  rescue Errno::ENOENT
+                    fail 'Please run `baseballbot init` to generate a config file'
+                  end
     end
 
     def subreddits
