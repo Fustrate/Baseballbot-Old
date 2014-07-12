@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['git@fustrate.com']
   spec.summary       = 'A reddit bot for baseball subreddits'
   spec.description   = 'Posts and updates reddit gamechats and sidebars'
-  spec.homepage      = 'http://github.com/Fustrate/BaseballBot'
+  spec.homepage      = 'http://github.com/Fustrate/Baseballbot'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   # spec.add_dependency 'pg', '~> 0.17'
   # spec.add_dependency 'mysql2'
   spec.add_dependency 'snoo', '~> 0.1'
+  spec.add_dependency 'thor', '~> 0.19'
 end
