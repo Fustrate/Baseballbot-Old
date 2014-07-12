@@ -6,7 +6,7 @@ module Baseballbot
       class_option :quiet, type: :boolean, aliases: :Q
       class_option :config, type: :string, aliases: :C
 
-      desc 'init', 'initialize baseballbot with a database type'
+      desc 'init', 'Initialize baseballbot with a database type'
       method_option :db,
                     required: true,
                     type: :string,
@@ -31,7 +31,7 @@ module Baseballbot
         end
       end
 
-      desc 'update', 'update game chats or subreddits'
+      desc 'update', 'Update game chats or subreddits'
       option :teams, desc: 'Teams to update'
       def update(type)
         set_config_file
@@ -51,12 +51,12 @@ module Baseballbot
         end
       end
 
-      desc 'version', 'display the installed version of Baseballbot'
+      desc 'version', 'Display the installed version of Baseballbot'
       def version
         puts Baseballbot::VERSION
       end
 
-      desc 'accounts SUBCOMMAND ...ARGS', 'manage accounts for baseballbot to use'
+      desc 'accounts SUBCOMMAND ...ARGS', 'Manage accounts for baseballbot to use'
       subcommand 'accounts', Baseballbot::CLI::Accounts
 
       desc 'subs SUBCOMMAND ...ARGS', 'Manage subreddits for baseballbot to update'
