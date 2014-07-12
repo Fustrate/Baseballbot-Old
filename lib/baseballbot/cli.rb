@@ -1,9 +1,15 @@
 require 'thor'
 require 'baseballbot'
 
+require 'baseballbot/cli/base'
+require 'baseballbot/cli/accounts'
+
 module Baseballbot
   class CLI < Thor
+    include Base
+
     class_option :quiet, type: :boolean, aliases: :Q
+    class_option :config, type: :string, aliases: :C
 
     desc 'init', 'initialize baseballbot with a database type'
     method_option :db,
@@ -11,16 +17,18 @@ module Baseballbot
                   type: :string,
                   desc: 'The database to use, either mysql or pg'
     def init
+      set_config_file
+
       case options[:db]
       when 'mysql'
         log 'Initializing with mysql'
         FileUtils.cp File.expand_path('../examples/mysql.yml', __FILE__),
-                     '.baseballbot.yml'
+                     Baseballbot.config_file
 
       when 'pg', 'postgresql'
         log 'Initializing with postgresql'
         FileUtils.cp File.expand_path('../examples/postgresql.yml', __FILE__),
-                     '.baseballbot.yml'
+                     Baseballbot.config_file
 
       else
         log 'Invalid database type'
@@ -31,6 +39,8 @@ module Baseballbot
     desc 'update', 'update game chats or subreddits'
     option :teams, desc: 'Teams to update'
     def update(type)
+      set_config_file
+
       teams = if options[:teams]
                 options[:teams].split(',')
               else
@@ -51,10 +61,7 @@ module Baseballbot
       puts Baseballbot::VERSION
     end
 
-    protected
-
-    def log(string)
-      puts string unless options[:quiet]
-    end
+    desc 'accounts SUBCOMMAND ...ARGS', 'manage accounts for baseballbot to use'
+    subcommand 'accounts', Accounts
   end
 end

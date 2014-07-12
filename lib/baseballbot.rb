@@ -7,6 +7,8 @@ require 'yaml'
 
 module Baseballbot
   class << self
+    attr_writer :config_file
+
     def update_gamechats!
       current_gamechats.each(&:update!)
     end
@@ -16,6 +18,18 @@ module Baseballbot
 
     def update_sidebars!
       subreddits.each(&:update_sidebar!)
+    end
+
+    def config
+      @config ||= begin
+                    YAML.load File.read config_file
+                  rescue Errno::ENOENT
+                    raise 'Please run `baseballbot init` to generate a config file'
+                  end
+    end
+
+    def config_file
+      @config_file || '.baseballbot.yml'
     end
 
     protected
@@ -42,11 +56,6 @@ module Baseballbot
     end
 
     def config
-      @config ||= begin
-                    YAML.load File.read '.baseballbot.yml'
-                  rescue Errno::ENOENT
-                    fail 'Please run `baseballbot init` to generate a config file'
-                  end
     end
 
     def subreddits
