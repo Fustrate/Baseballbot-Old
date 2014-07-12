@@ -57,7 +57,10 @@ module Baseballbot
       end
 
       desc 'accounts SUBCOMMAND ...ARGS', 'manage accounts for baseballbot to use'
-      subcommand 'accounts', Accounts
+      subcommand 'accounts', Baseballbot::CLI::Accounts
+
+      desc 'subs SUBCOMMAND ...ARGS', 'Manage subreddits for baseballbot to update'
+      subcommand 'subs', Baseballbot::CLI::Subs
     end
   end
 end
