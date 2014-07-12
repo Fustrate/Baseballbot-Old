@@ -1,5 +1,5 @@
 module Baseballbot
-  class CLI < Thor
+  module CLI
     module Base
       protected
 

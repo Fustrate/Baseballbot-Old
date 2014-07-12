@@ -6,7 +6,7 @@ if RUBY_VERSION >= '2.1'
 
   require 'baseballbot/cli'
 
-  Baseballbot::CLI.start
+  Baseballbot::CLI::Main.start
 else
   puts 'Baseballbot requires Ruby >= 2.1'
   exit(-1)
