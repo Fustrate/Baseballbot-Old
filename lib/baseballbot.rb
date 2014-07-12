@@ -58,8 +58,8 @@ module Baseballbot
         SELECT *
         FROM gamechats
         WHERE ended_at IS NULL
-        AND starts_at < $1
-        AND sport = $2', [Time.now, 'mlb']
+        AND starts_at < $1',
+        [Time.now]
       ) do |result|
         puts result.inspect
       end

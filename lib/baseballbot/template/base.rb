@@ -6,7 +6,7 @@ module Baseballbot
       end
 
       def inspect
-        %Q(#<#{self.class} @template=#{@template.filename.inspect}>)
+        %Q(#<#{self.class} @template="#{@template.filename.inspect}">)
       end
 
       def result

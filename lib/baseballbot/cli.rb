@@ -3,7 +3,7 @@ require 'baseballbot'
 
 module Baseballbot
   class CLI < Thor
-    class_option :quiet, type: :boolean
+    class_option :quiet, type: :boolean, aliases: :Q
 
     desc 'init', 'initialize baseballbot with a database type'
     method_option :db,

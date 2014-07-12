@@ -131,7 +131,7 @@ module Baseballbot
         if @game.in_progress?
           begin
             @game.inning[1] + ' of the ' + @game.inning[0].to_i.ordinalize
-          rescue Exception => e
+          rescue Exception
             'Postponed'
           end
         elsif @game.over?
