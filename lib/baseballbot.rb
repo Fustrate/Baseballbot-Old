@@ -24,7 +24,7 @@ module Baseballbot
       @config ||= begin
                     YAML.load File.read config_file
                   rescue Errno::ENOENT
-                    raise 'Please run `baseballbot init` to generate a config file'
+                    raise %Q(Please run `baseballbot init` to generate a config file. Looked in "#{File.expand_path config_file}".)
                   end
     end
 
