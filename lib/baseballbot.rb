@@ -55,9 +55,6 @@ module Baseballbot
       @api ||= ''
     end
 
-    def config
-    end
-
     def subreddits
       db
     end
