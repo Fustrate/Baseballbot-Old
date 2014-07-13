@@ -7,12 +7,12 @@ module Baseballbot
       class_option :config, type: :string, aliases: :C
 
       desc 'init {mysql|pg}', 'Initialize baseballbot with a database type'
-      def init
+      def init(db)
         set_config_file
 
         config = {
           'db' => {
-            'adapter' => '',
+            'adapter' => db,
             'username' => '',
             'password' => '',
             'database' => '',
@@ -22,14 +22,13 @@ module Baseballbot
           'subreddits' => {}
         }
 
-        if %w(mysql pg).include? options[:db]
-          log "Initializing with #{options[:db]}. Please edit the database connection details in #{Baseballbot.config_file}", :green
+        if %w(mysql pg).include? db
+          log "Initializing with #{db}. Please edit the database connection details in #{Baseballbot.config_file}", :green
 
-          config['db']['adapter'] = options[:db]
           write_config config
 
         else
-          log 'Invalid database type', :red
+          log 'Invalid database type.', :red
 
         end
       end
