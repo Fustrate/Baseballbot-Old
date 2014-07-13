@@ -10,16 +10,23 @@ module Baseballbot
       def init
         set_config_file
 
-        case options[:db]
-        when 'mysql'
-          FileUtils.cp File.expand_path('../examples/mysql.yml', __FILE__),
-                       Baseballbot.config_file
-          log "Initializing with mysql. Please edit the database connection details in #{Baseballbot.config_file}", :green
+        config = {
+          'db' => {
+            'adapter' => '',
+            'username' => '',
+            'password' => '',
+            'database' => '',
+          },
+          'useragent' => '',
+          'accounts' => {},
+          'subreddits' => {}
+        }
 
-        when 'pg', 'postgresql'
-          FileUtils.cp File.expand_path('../examples/postgresql.yml', __FILE__),
-                       Baseballbot.config_file
-          log "Initializing with postgresql. Please edit the database connection details in #{Baseballbot.config_file}", :green
+        if %w(mysql pg).include? options[:db]
+          log "Initializing with #{options[:db]}. Please edit the database connection details in #{Baseballbot.config_file}", :green
+
+          config['db']['adapter'] = options[:db]
+          write_config config
 
         else
           log 'Invalid database type', :red
