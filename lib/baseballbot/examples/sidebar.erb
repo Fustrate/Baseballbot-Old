@@ -1,0 +1,41 @@
+## <%= division_name %> Standings
+
+ |W|L|%|GB|L10
+:-:|:-:|:-:|:-:|:-:|:-:
+<% division.each do |team| %>
+[][<%= team[:code] %>]|<%= team[:wins] %>|<%= team[:losses] %>|<%= pct team[:percent] %>|<%= gb team[:games_back] %>|<%= team[:last_ten] %>
+<% end %>
+
+[Updated](/r/baseballbot) <%= time_with_zone %>
+
+## <%= month_name %> Schedule
+
+S|M|T|W|T|F|S
+:-:|:-:|:-:|:-:|:-:|:-:|:-:
+<%= ' |' * calendar[calendar.keys.first][:date].wday %>
+<% calendar.each do |cday, day| %>
+<% if day[:opponent] %>
+<% if day[:home] %>**^<%= cday %> [](/r/<%= day[:opponent][:sub].downcase %> "<%= day[:status] %>")**<% else %>*^<%= cday %> [](/r/<%= day[:opponent][:sub].downcase %> "<%= day[:status] %>")*<% end %>
+<% else %>^<%= cday %>
+<% end %>
+<% if !day[:date].saturday? %>|<% elsif day[:date].day != day[:date].end_of_month.day %><%= "\n" %><% end %>
+<% end %>
+
+
+## <%= year %> Batting Leaders
+
+Stat|Name|Total
+-|-|-
+<% %w(h xbh hr rbi bb sb avg obp slg ops).each do |key| %>
+<%= key.upcase %>|<%= hitter_stats[key].values.join '|' %>
+
+<% end %>
+
+## <%= year %> Pitching Leaders
+
+Stat|Name|Total
+-|-|-
+<% %w(w sv hld ip so avg whip era).each do |key| %>
+<%= key.upcase %>|<%= pitcher_stats[key].values.join '|' %>
+
+<% end %>

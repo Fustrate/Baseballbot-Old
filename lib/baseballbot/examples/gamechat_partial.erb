@@ -1,0 +1,41 @@
+### Box Score - <%= game_status %>
+
+ |<%= (1..(lines[0].count)).to_a.join '|' %>|R|H|E
+:-:|<%= (':-:|' * lines[0].count) %>:-:|:-:|:-:
+<%= "[](/r/#{ subreddits[game.away_team.code.to_sym].downcase })|" + lines[0].join('|') %>|**<%= away[:runs] %>**|**<%= away[:hits] %>**|**<%= away[:errors] %>**
+<%= "[](/r/#{ subreddits[game.home_team.code.to_sym].downcase })|" + lines[1].join('|') %>|**<%= home[:runs] %>**|**<%= home[:hits] %>**|**<%= home[:errors] %>**
+
+### Lineups
+
+**<%= game.home_team.code %>**|Pos|AB|R|H|RBI|BB|SO|BA||**<%= game.away_team.code %>**|Pos|AB|R|H|RBI|BB|SO|BA
+-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+<% batters.each do |home_batter, away_batter| %><% if home_batter.try(:has_attribute?, 'bo') || away_batter.try(:has_attribute?, 'bo') %>
+<% if home_batter && home_batter.has_attribute?('bo') %><%= '[](/spacer)' if (home_batter['bo'].to_i % 100 > 0) %>[<%= home_batter['name'] %>](http://mlb.mlb.com/team/player.jsp?player_id=<%= home_batter['id'] %>)|<%= home_batter['pos'] %>|<%= home_batter['ab'] %>|<%= home_batter['r'] %>|<%= home_batter['h'] %>|<%= home_batter['rbi'] %>|<%= home_batter['bb'] %>|<%= home_batter['so'] %>|<%= home_batter['avg'] %><% else %> ||||||||<% end %>
+||<% if away_batter && away_batter.has_attribute?('bo') %><%= '[](/spacer)' if (away_batter['bo'].to_i % 100 > 0) %>[<%= away_batter['name'] %>](http://mlb.mlb.com/team/player.jsp?player_id=<%= away_batter['id'] %>)|<%= away_batter['pos'] %>|<%= away_batter['ab'] %>|<%= away_batter['r'] %>|<%= away_batter['h'] %>|<%= away_batter['rbi'] %>|<%= away_batter['bb'] %>|<%= away_batter['so'] %>|<%= away_batter['avg'] %><% else %> ||||||||<% end %>
+<% end %><% end %>
+
+**<%= game.home_team.code %>**|IP|H|R|ER|BB|SO|P-S|ERA||**<%= game.away_team.code %>**|IP|H|R|ER|BB|SO|P-S|ERA
+-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+<% pitchers.each do |home_pitcher, away_pitcher| %>
+<% if home_pitcher %>[<%= home_pitcher['name'] %>](http://mlb.mlb.com/team/player.jsp?player_id=<%= home_pitcher['id'] %>)|<%= (home_pitcher['out'].to_i / 3) %>.<%= (home_pitcher['out'].to_i % 3) %>|<%= home_pitcher['h'] %>|<%= home_pitcher['r'] %>|<%= home_pitcher['er'] %>|<%= home_pitcher['bb'] %>|<%= home_pitcher['so'] %>|<%= home_pitcher['np'] %>-<%= home_pitcher['s'] %>|<%= home_pitcher['era'] %><% else %> ||||||||<% end %>
+||<% if away_pitcher %>[<%= away_pitcher['name'] %>](http://mlb.mlb.com/team/player.jsp?player_id=<%= away_pitcher['id'] %>)|<%= (away_pitcher['out'].to_i / 3) %>.<%= (away_pitcher['out'].to_i % 3) %>|<%= away_pitcher['h'] %>|<%= away_pitcher['r'] %>|<%= away_pitcher['er'] %>|<%= away_pitcher['bb'] %>|<%= away_pitcher['so'] %>|<%= away_pitcher['np'] %>-<%= away_pitcher['s'] %>|<%= away_pitcher['era'] %><% else %> ||||||||<% end %>
+<% end %>
+
+### Scoring Plays
+
+Inning|Event|Score
+:-:|-|:-:
+<% events.each do |event| %>
+<%= event[:inning_side] %><%= event[:inning] %>|<%= event[:event] %>|<%= event[:score] %>|
+<% end %>
+
+<% if game.over? && game.winning_pitcher %>
+
+### Decisions
+
+Winning Pitcher|Losing Pitcher
+:-:|:-:
+<%= game.winning_pitcher.name %> (<%= game.winning_pitcher.wins.to_i + 1 %>-<%= game.winning_pitcher.losses %>, <%= game.winning_pitcher.era %>)|<%= game.losing_pitcher.name %> (<%= game.losing_pitcher.wins %>-<%= game.losing_pitcher.losses.to_i + 1 %>, <%= game.losing_pitcher.era %>)
+<% end %>
+
+*Updated at <%= time_with_zone %>*

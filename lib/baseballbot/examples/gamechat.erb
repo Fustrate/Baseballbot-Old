@@ -1,0 +1,51 @@
+### <%= game.away_team.name %> (<%= game.away_record.join '-' %>) @ <%= game.home_team.name %> (<%= game.home_record.join '-' %>)
+
+First Pitch: <%= game.home_start_time %> at <%= game.venue %>
+
+ |Pitcher|TV|Radio
+-|-|-|-
+[<%= game.away_team.name %>](/r/<%= subreddits[game.away_team.code.to_sym].downcase %>)|<%= pitcher_line game.gamecenter.xpath('//game/probables/away') %>|<%= game.away_tv %>|<%= game.away_radio %>
+[<%= game.home_team.name %>](/r/<%= subreddits[game.home_team.code.to_sym].downcase %>)|<%= pitcher_line game.gamecenter.xpath('//game/probables/home') %>|<%= game.home_tv %>|<%= game.home_radio %>
+
+MLB|Fangraphs|Brooks Baseball|Reddit Stream|IRC Chat
+:-:|:-:|:-:|:-:|:-:
+[Gameday](http://mlb.mlb.com/mlb/gameday/index.jsp?gid=<%= row['gid'] %>)|[Game Graph](http://www.fangraphs.com/livewins.aspx?date=<%= time.strftime '%Y-%m-%d' %>&team=<%= team_name %>&dh=0&season=2014)|[Strikezone Map](http://www.brooksbaseball.net/pfxVB/zoneTrack.php?<%= time.strftime "month=%m&day=%d&year=%Y&game=gid_#{row['gid']}" %>%2F)|[Live Comments](http://reddit-stream.com/comments/#ID#)|[Freenode: #reddit-baseball](http://webchat.freenode.net/?channels=reddit-baseball)
+
+[](/updates)
+### Box Score
+
+ |<%= (1..(lines[0].count)).to_a.join '|' %>|R|H|E
+:-:|<%= (':-:|' * lines[0].count) %>:-:|:-:|:-:
+<%= "[](/r/#{ subreddits[game.away_team.code.to_sym].downcase })|" + lines[0].join('|') %>|**<%= away[:runs] %>**|**<%= away[:hits] %>**|**<%= away[:errors] %>**
+<%= "[](/r/#{ subreddits[game.home_team.code.to_sym].downcase })|" + lines[1].join('|') %>|**<%= home[:runs] %>**|**<%= home[:hits] %>**|**<%= home[:errors] %>**
+
+### Lineups
+
+**<%= game.home_team.code %>**|Pos|AB|R|H|RBI|BB|SO|BA||**<%= game.away_team.code %>**|Pos|AB|R|H|RBI|BB|SO|BA
+-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+<% batters.each do |home_batter, away_batter| %>
+<% if home_batter %>[<%= home_batter['name'] %>](http://mlb.mlb.com/team/player.jsp?player_id=<%= home_batter['id'] %>)|<%= home_batter['pos'] %>|<%= home_batter['ab'] %>|<%= home_batter['r'] %>|<%= home_batter['h'] %>|<%= home_batter['rbi'] %>|<%= home_batter['bb'] %>|<%= home_batter['so'] %>|<%= home_batter['avg'] %><% else %> |||||||||<% end %>
+||<% if away_batter %>[<%= away_batter['name'] %>](http://mlb.mlb.com/team/player.jsp?player_id=<%= away_batter['id'] %>)|<%= away_batter['pos'] %>|<%= away_batter['ab'] %>|<%= away_batter['r'] %>|<%= away_batter['h'] %>|<%= away_batter['rbi'] %>|<%= away_batter['bb'] %>|<%= away_batter['so'] %>|<%= away_batter['avg'] %><% else %> |||||||||<% end %>
+<% end %>
+
+**<%= game.home_team.code %>**|IP|H|R|ER|BB|SO|P-S|ERA||**<%= game.away_team.code %>**|IP|H|R|ER|BB|SO|P-S|ERA
+-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:
+<% pitchers.each do |home_pitcher, away_pitcher| %>
+<% if home_pitcher %>[<%= home_pitcher['name'] %>](http://mlb.mlb.com/team/player.jsp?player_id=<%= home_pitcher['id'] %>)|<%= (home_pitcher['out'].to_i / 3) %>.<%= (home_pitcher['out'].to_i % 3) %>|<%= home_pitcher['h'] %>|<%= home_pitcher['r'] %>|<%= home_pitcher['er'] %>|<%= home_pitcher['bb'] %>|<%= home_pitcher['so'] %>|<%= home_pitcher['np'] %>-<%= home_pitcher['s'] %>|<%= home_pitcher['era'] %><% else %> |||||||||<% end %>
+||<% if away_pitcher %>[<%= away_pitcher['name'] %>](http://mlb.mlb.com/team/player.jsp?player_id=<%= away_pitcher['id'] %>)|<%= (away_pitcher['out'].to_i / 3) %>.<%= (away_pitcher['out'].to_i % 3) %>|<%= away_pitcher['h'] %>|<%= away_pitcher['r'] %>|<%= away_pitcher['er'] %>|<%= away_pitcher['bb'] %>|<%= away_pitcher['so'] %>|<%= away_pitcher['np'] %>-<%= away_pitcher['s'] %>|<%= away_pitcher['era'] %><% else %> |||||||||<% end %>
+<% end %>
+
+Lineups will be posted at game time.
+
+### Scoring Plays
+
+Inning|Event|Score
+:-:|-|:-:
+<% events.each do |event| %>
+	<%= event[:inning_side] %><%= event[:inning] %>|<%= event[:event] %>|<%= event[:score] %>
+<% end %>
+
+*Posted at <%= time_with_zone %>. Updates start at game time.*
+[](/updates)
+
+Remember to **sort by new** to keep up!
