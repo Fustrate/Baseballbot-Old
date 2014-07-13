@@ -9,6 +9,9 @@ module Baseballbot
       def add(subreddit, team, account)
         set_config_file
 
+        subreddit.downcase!
+        account.downcase!
+
         config = Baseballbot.config
 
         config['subreddits'][subreddit] = {
@@ -19,10 +22,11 @@ module Baseballbot
 
         write_config config
 
-        FileUtils.cp File.expand_path('../../examples/team.rb', __FILE__),
-                     "subreddits/#{subreddit}.rb"
+        FileUtils.mkdir_p %W(subreddits/ templates/#{subreddit}/)
 
-        FileUtils.mkdir_p "templates/#{subreddit}/"
+        template = ERB.new open('../../examples/team.erb').read, nil, '<>'
+
+        write_file "subreddits/#{subreddit}.rb", template.result(binding)
 
         if options[:sidebar]
           copy_example_file 'sidebar.erb', "templates/#{subreddit}/sidebar.erb"
