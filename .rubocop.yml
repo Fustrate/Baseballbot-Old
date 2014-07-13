@@ -2,21 +2,13 @@ AllCops:
   Include:
     - Gemfile
     - Rakefile
-
-ClassLength:
-  Max: 100
-
-GuardClause:
-  Enabled: false
+    - baseballbot.gemspec
 
 MethodLength:
   Enabled: false
 
-SingleSpaceBeforeFirstArg:
-  Enabled: false
-
-TrailingComma:
-  Enabled: false
-
 LineLength:
-  Max: 119
+  Max: 130
+
+Documentation:
+  Enabled: false
