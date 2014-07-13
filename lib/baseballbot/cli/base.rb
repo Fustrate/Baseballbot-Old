@@ -13,8 +13,8 @@ module Baseballbot
         Baseballbot.config_file = options[:config] if options[:config]
       end
 
-      def log(string)
-        puts string unless options[:quiet]
+      def log(string, color = nil)
+        say(string, color) unless options[:quiet]
       end
     end
   end
