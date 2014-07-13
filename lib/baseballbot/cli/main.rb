@@ -16,17 +16,17 @@ module Baseballbot
 
         case options[:db]
         when 'mysql'
-          log "Initializing with mysql. Please edit the database connection details in #{Baseballbot.config_file}"
           FileUtils.cp File.expand_path('../examples/mysql.yml', __FILE__),
                        Baseballbot.config_file
+          log "Initializing with mysql. Please edit the database connection details in #{Baseballbot.config_file}", :green
 
         when 'pg', 'postgresql'
-          log "Initializing with postgresql. Please edit the database connection details in #{Baseballbot.config_file}"
           FileUtils.cp File.expand_path('../examples/postgresql.yml', __FILE__),
                        Baseballbot.config_file
+          log "Initializing with postgresql. Please edit the database connection details in #{Baseballbot.config_file}", :green
 
         else
-          log 'Invalid database type'
+          log 'Invalid database type', :red
 
         end
       end
@@ -43,10 +43,10 @@ module Baseballbot
                 end
 
         if type == 'sidebars'
-          log 'Updating sidebars'
+          log 'Updating sidebars', :green
 
         elsif type == 'gamechats'
-          log 'Updating gamechats'
+          log 'Updating gamechats', :green
 
         end
       end
