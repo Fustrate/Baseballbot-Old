@@ -6,11 +6,7 @@ module Baseballbot
       class_option :quiet, type: :boolean, aliases: :Q
       class_option :config, type: :string, aliases: :C
 
-      desc 'init', 'Initialize baseballbot with a database type'
-      method_option :db,
-                    required: true,
-                    type: :string,
-                    desc: 'The database to use, either mysql or pg'
+      desc 'init {mysql|pg}', 'Initialize baseballbot with a database type'
       def init
         set_config_file
 
@@ -31,7 +27,7 @@ module Baseballbot
         end
       end
 
-      desc 'update', 'Update game chats or subreddits'
+      desc 'update {gamechats|sidebars}', 'Update game chats or subreddits'
       option :teams, desc: 'Teams to update'
       def update(type)
         set_config_file
