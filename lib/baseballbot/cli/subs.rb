@@ -3,10 +3,10 @@ module Baseballbot
     class Subs < Thor
       include Base
 
-      desc 'add SUBREDDIT ACCOUNT', 'Add a new subreddit'
+      desc 'add SUBREDDIT TEAM ACCOUNT', 'Add a new subreddit'
       option :sidebar, type: :boolean, default: true
       option :gamechats, type: :boolean, default: true
-      def add(subreddit, account)
+      def add(subreddit, team, account)
         set_config_file
 
         config = Baseballbot.config
