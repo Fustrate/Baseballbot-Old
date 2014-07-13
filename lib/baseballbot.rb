@@ -21,11 +21,10 @@ module Baseballbot
     end
 
     def config
-      @config ||= begin
-                    YAML.load File.read config_file
-                  rescue Errno::ENOENT
-                    raise %Q(Please run `baseballbot init` to generate a config file. Looked in "#{File.expand_path config_file}".)
-                  end
+      @config ||= YAML.load File.read config_file
+    rescue Errno::ENOENT
+      raise 'Please run `baseballbot init` to generate a config file. ' \
+            "Looked in '#{File.expand_path config_file}'."
     end
 
     def config_file
@@ -60,11 +59,8 @@ module Baseballbot
     end
 
     def current_gamechats
-      db.exec_params('
-        SELECT *
-        FROM gamechats
-        WHERE ended_at IS NULL
-        AND starts_at < $1',
+      db.exec_params(
+        ' SELECT * FROM gamechats WHERE ended_at IS NULL AND starts_at < $1',
         [Time.now]
       ) do |result|
         puts result.inspect

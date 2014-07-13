@@ -15,7 +15,7 @@ module Baseballbot
             'adapter' => db,
             'username' => '',
             'password' => '',
-            'database' => '',
+            'database' => ''
           },
           'useragent' => '',
           'accounts' => {},

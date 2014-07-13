@@ -1,5 +1,7 @@
 module Baseballbot
   module CLI
+    # Command line functionality for adding and removing subreddits and the
+    # default template files for them.
     class Subs < Thor
       include Base
 
@@ -17,7 +19,7 @@ module Baseballbot
         config['subreddits'][subreddit] = {
           'account' => account,
           'sidebar' => options['sidebar'],
-          'gamechats' => options['gamechats'],
+          'gamechats' => options['gamechats']
         }
 
         write_config config

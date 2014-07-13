@@ -1,5 +1,7 @@
 module Baseballbot
   module CLI
+    # Command line functionality for adding and removing reddit accounts that
+    # can be used to update sidebars and gamechats.
     class Accounts < Thor
       include Base
 
