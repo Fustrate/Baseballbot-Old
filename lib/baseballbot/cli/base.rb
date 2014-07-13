@@ -17,6 +17,11 @@ module Baseballbot
         Baseballbot.config_file = options[:config] if options[:config]
       end
 
+      def copy_example_file(file, destination)
+        FileUtils.cp File.expand_path("../../examples/#{file}", __FILE__),
+                     destination
+      end
+
       def log(string, color = nil)
         say(string, color) unless options[:quiet]
       end

@@ -25,16 +25,14 @@ module Baseballbot
         FileUtils.mkdir_p "templates/#{subreddit}/"
 
         if options[:sidebar]
-          FileUtils.cp File.expand_path('../../examples/sidebar.erb', __FILE__),
-                       "templates/#{subreddit}/sidebar.erb"
+          copy_example_file 'sidebar.erb', "templates/#{subreddit}/sidebar.erb"
         end
 
         if options[:gamechats]
-          FileUtils.cp File.expand_path('../../examples/gamechat.erb', __FILE__),
-                       "templates/#{subreddit}/gamechat.erb"
-
-          FileUtils.cp File.expand_path('../../examples/gamechat_partial.erb', __FILE__),
-                       "templates/#{subreddit}/gamechat_partial.erb"
+          copy_example_file 'gamechat.erb',
+                            "templates/#{subreddit}/gamechat.erb"
+          copy_example_file 'gamechat_partial.erb',
+                            "templates/#{subreddit}/gamechat_partial.erb"
         end
 
         log "Added #{subreddit} to baseballbot subreddits"
