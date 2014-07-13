@@ -131,7 +131,7 @@ module Baseballbot
         if @game.in_progress?
           begin
             @game.inning[1] + ' of the ' + @game.inning[0].to_i.ordinalize
-          rescue Exception
+          rescue NoMethodError
             'Postponed'
           end
         elsif @game.over?
@@ -142,9 +142,9 @@ module Baseballbot
       end
 
       def outs
-        if @game.linescore.at_xpath('//game/@outs')
-          @game.linescore.xpath('//game/@outs').text.to_i
-        end
+        return unless @game.linescore.at_xpath('//game/@outs')
+
+        @game.linescore.xpath('//game/@outs').text.to_i
       end
 
       def batters
