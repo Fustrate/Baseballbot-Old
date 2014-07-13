@@ -5,6 +5,7 @@ require 'baseballbot/template/gamechat'
 
 require 'yaml'
 
+# Top-level Baseballbot module. The main access point for doing anything.
 module Baseballbot
   class << self
     attr_writer :config_file
@@ -34,7 +35,7 @@ module Baseballbot
     protected
 
     def db
-      @db ||= case config[:db][:type]
+      @db ||= case config['db']['adapter']
               when 'pg'
                 require 'pg'
                 PG::Connect config[:db]

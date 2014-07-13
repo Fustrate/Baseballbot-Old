@@ -11,8 +11,8 @@ module Baseballbot
       def add(subreddit, team, account)
         set_config_file
 
-        subreddit.downcase!
-        account.downcase!
+        subreddit = subreddit.downcase
+        account = account.downcase
 
         config = Baseballbot.config
 
@@ -26,7 +26,8 @@ module Baseballbot
 
         FileUtils.mkdir_p %W(subreddits/ templates/#{subreddit}/)
 
-        template = ERB.new open('../../examples/team.erb').read, nil, '<>'
+        template = ERB.new open(File.expand_path('../../examples/team.erb',
+                                                 __FILE__)).read, nil, '<>'
 
         write_file "subreddits/#{subreddit}.rb", template.result(binding)
 
