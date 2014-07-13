@@ -12,13 +12,32 @@ module Baseballbot
         config = Baseballbot.config
 
         config['subreddits'][subreddit] = {
-          sidebar: options['sidebar'],
-          gamechats: options['gamechats']
+          'account' => account,
+          'sidebar' => options['sidebar'],
+          'gamechats' => options['gamechats'],
         }
 
         write_config config
 
-        log "Added #{username} to baseballbot subreddits"
+        FileUtils.cp File.expand_path('../../examples/team.rb', __FILE__),
+                     "subreddits/#{subreddit}.rb"
+
+        FileUtils.mkdir_p "templates/#{subreddit}/"
+
+        if options[:sidebar]
+          FileUtils.cp File.expand_path('../../examples/sidebar.erb', __FILE__),
+                       "templates/#{subreddit}/sidebar.erb"
+        end
+
+        if options[:gamechats]
+          FileUtils.cp File.expand_path('../../examples/gamechat.erb', __FILE__),
+                       "templates/#{subreddit}/gamechat.erb"
+
+          FileUtils.cp File.expand_path('../../examples/gamechat_partial.erb', __FILE__),
+                       "templates/#{subreddit}/gamechat_partial.erb"
+        end
+
+        log "Added #{subreddit} to baseballbot subreddits"
       end
 
       desc 'remove SUBREDDIT', 'Remove a subreddit'
@@ -31,7 +50,7 @@ module Baseballbot
 
         write_config config
 
-        log "Removed #{username} from baseballbot subreddits"
+        log "Removed #{subreddit} from baseballbot subreddits"
       end
     end
   end

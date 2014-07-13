@@ -1,8 +1,0 @@
----
-db:
-  adapter: mysql
-  username: ""
-  password: ""
-  database: ""
-useragent: ""
-accounts: {}

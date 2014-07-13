@@ -1,8 +1,0 @@
----
-db:
-  adapter: pg
-  username: ""
-  password: ""
-  database: ""
-useragent: ""
-accounts: {}
